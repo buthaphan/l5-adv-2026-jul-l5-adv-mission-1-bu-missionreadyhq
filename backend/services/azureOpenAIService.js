@@ -24,7 +24,9 @@ const openai = new OpenAI({
 
 // Analyse a vehicle image and return a VehiclePrediction.
 async function analyseVehicle(file) {
-  // Azure implementation will be added next.
+  // Developer Note:
+  // Temporary placeholder response used to verify the backend architecture
+  // before integrating Azure OpenAI.
 
   return new VehiclePrediction("Unknown", null, null, 0);
 }
