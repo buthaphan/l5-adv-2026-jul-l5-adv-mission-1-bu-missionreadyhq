@@ -8,7 +8,7 @@ async function analyseVehicleImage(req, res) {
   try {
     // The uploaded image will be provided by Multer.
     const file = req.file;
-
+     
     // Send the image to the AI service.
     const prediction = await analyseVehicle(file);
 
