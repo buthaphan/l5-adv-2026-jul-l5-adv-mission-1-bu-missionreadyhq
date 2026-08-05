@@ -18,9 +18,12 @@ const deploymentName = process.env.AZURE_OPENAI_DEPLOYMENT;
 
 // Analyse a vehicle image and return a VehiclePrediction.
 async function analyseVehicle(file) {
-  // Developer Note:
-  // Temporary placeholder response used to verify the backend architecture
-  // before integrating Azure OpenAI.
+  const response = await openai.responses.create({
+    model: deploymentName,
+    input: "Say 'Azure OpenAI connection successful.'",
+  });
+
+  console.log(response);
 
   return new VehiclePrediction("Unknown", null, null, 0);
 }
