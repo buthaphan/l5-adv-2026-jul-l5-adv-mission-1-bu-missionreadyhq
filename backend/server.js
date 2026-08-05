@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import vehicleRoutes from './routes/vehicleRoutes.js'
+
 dotenv.config();
 
 const app = express();
@@ -10,6 +12,8 @@ const PORT = process.env.PORT || 5002;
 //Middleware
 app.use(express.json());
 app.use(cors());
+
+app.use('/api/vehicle', vehicleRoutes);
 
 // Developer Note:
 // Verify the backend server is running and responding.
