@@ -7,7 +7,6 @@ function Header() {
       <h1 className="text-4xl font-bold text-red-600">
         Turners AI Vehicle Inspector
       </h1>
-
       <p className="mt-3 text-lg text-slate-600">
         Identify a vehicle from a single image using AI.
       </p>
