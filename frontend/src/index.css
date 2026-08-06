@@ -1,0 +1,4 @@
+/* Developer Note:
+   Imports all Tailwind CSS utilities into the application. */
+
+@import "tailwindcss";
