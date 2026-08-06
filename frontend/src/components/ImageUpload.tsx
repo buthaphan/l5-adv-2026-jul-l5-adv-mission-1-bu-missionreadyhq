@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { analyseVehicle } from "../services/vehicleService";
 import type { VehiclePrediction } from "../types/vehiclePrediction";
 
@@ -16,6 +17,9 @@ function ImageUpload({ onPredictionReceived }: ImageUploadProps) {
   // Tracks whether the vehicle is currently being analysed.
   const [isLoading, setIsLoading] = useState(false);
 
+  // Stores an error message if the analysis fails.
+  const [error, setError] = useState<string | null>(null);
+
   // Creates a temporary URL so the selected image can be displayed.
   const previewUrl = selectedFile ? URL.createObjectURL(selectedFile) : null;
 
@@ -31,6 +35,9 @@ function ImageUpload({ onPredictionReceived }: ImageUploadProps) {
       return;
     }
 
+    // Clears any previous error before starting a new analysis.
+    setError(null);
+
     setIsLoading(true);
 
     try {
@@ -39,6 +46,19 @@ function ImageUpload({ onPredictionReceived }: ImageUploadProps) {
       onPredictionReceived(result);
     } catch (error) {
       console.error(error);
+
+      if (axios.isAxiosError(error)) {
+        if (!error.response) {
+          // The request never reached the server.
+          setError("Unable to connect to the server. Please try again later.");
+        } else {
+          // The server returned an error.
+          setError("Vehicle analysis failed. Please try again.");
+        }
+      } else {
+        // Handles unexpected JavaScript errors.
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +74,13 @@ function ImageUpload({ onPredictionReceived }: ImageUploadProps) {
         <p className="mt-3 text-center text-slate-500">
           Choose a clear image of a vehicle for AI analysis.
         </p>
+
+        {/* Displays an error message if the analysis fails. */}
+        {error && (
+          <div className="mt-6 w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
+            {error}
+          </div>
+        )}
 
         {/* Hidden file input triggered by the custom upload button. */}
         <input
