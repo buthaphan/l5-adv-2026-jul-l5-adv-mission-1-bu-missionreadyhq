@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { analyseVehicle } from "../services/vehicleService";
+import type { VehiclePrediction } from "../types/vehiclePrediction";
 
-function ImageUpload() {
+type ImageUploadProps = {
+  onPredictionReceived: (prediction: VehiclePrediction) => void;
+};
+
+// Allows the component to send the prediction back to the parent.
+function ImageUpload({ onPredictionReceived }: ImageUploadProps) {
   // Stores the selected image file.
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -22,6 +28,8 @@ function ImageUpload() {
 
     try {
       const result = await analyseVehicle(selectedFile);
+
+      onPredictionReceived(result);
     } catch (error) {
       console.error(error);
     }

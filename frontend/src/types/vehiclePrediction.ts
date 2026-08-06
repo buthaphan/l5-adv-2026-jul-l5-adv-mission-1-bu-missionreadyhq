@@ -1,4 +1,3 @@
-// Developer Note:
 // Defines the structure of a vehicle prediction returned by the backend.
 
 export type VehiclePrediction = {
