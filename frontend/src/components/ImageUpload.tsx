@@ -4,6 +4,9 @@ function ImageUpload() {
   // Stores the selected image file.
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  // Creates a temporary URL so the selected image can be displayed.
+  const previewUrl = selectedFile ? URL.createObjectURL(selectedFile) : null;
+
   // Updates the selected image when the user chooses a file.
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0] ?? null;
@@ -21,6 +24,15 @@ function ImageUpload() {
           Choose a clear image of a vehicle for AI analysis.
         </p>
 
+        {/* Displays a preview after an image has been selected. */}
+        {previewUrl && (
+          <img
+            src={previewUrl}
+            alt="Vehicle preview"
+            className="mt-6 h-72 w-3/5 rounded-xl object-cover shadow-md"
+          />
+        )}
+
         {/* Hidden file input triggered by the custom upload button. */}
         <input
           id="vehicle-image"
@@ -30,18 +42,18 @@ function ImageUpload() {
           onChange={handleFileChange}
         />
 
+        {selectedFile && (
+          <p className="mt-4 rounded-lg bg-slate-100 px-4 py-2 text-sm text-slate-700">
+            📷 {selectedFile.name}
+          </p>
+        )}
+
         <label
           htmlFor="vehicle-image"
           className="mt-8 cursor-pointer rounded-xl bg-red-600 px-8 py-3 font-medium text-white transition hover:bg-red-700"
         >
-          Browse Image
+          {selectedFile ? "Change Image" : "Browse Image"}
         </label>
-
-        {selectedFile && (
-          <p className="mt-4 text-sm text-slate-600">
-            Selected: {selectedFile.name}
-          </p>
-        )}
       </div>
     </section>
   );
