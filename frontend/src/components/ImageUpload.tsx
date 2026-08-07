@@ -78,7 +78,7 @@ function ImageUpload({
 	}
 
 	return (
-		<section className="rounded-2xl border-2 border-dashed border-slate-300 bg-white p-10 shadow-lg">
+		<section className="rounded-2xl border-2 border-dashed border-slate-300 bg-turners-surface p-10 shadow-lg">
 			<div className="flex flex-col items-center justify-center">
 				<h2 className="text-2xl font-semibold text-slate-800">
 					Upload Vehicle Image
@@ -90,7 +90,7 @@ function ImageUpload({
 
 				{/* Displays an error message if the analysis fails. */}
 				{error && (
-					<div className="mt-6 w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
+					<div className="mt-6 w-full rounded-button border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
 						{error}
 					</div>
 				)}
@@ -109,7 +109,7 @@ function ImageUpload({
 						{/* Displays the upload button before an image is selected. */}
 						<label
 							htmlFor="vehicle-image"
-							className="mt-8 cursor-pointer rounded-xl bg-red-600 px-8 py-3 font-medium text-white transition hover:bg-red-700"
+							className="mt-8 cursor-pointer rounded-button bg-turners-primary px-8 py-3 text-[15px] font-normal text-white transition hover:bg-turners-primary-hover"
 						>
 							Browse Image
 						</label>
@@ -120,11 +120,11 @@ function ImageUpload({
 						<img
 							src={previewUrl!}
 							alt="Vehicle preview"
-							className="mt-6 h-72 w-3/5 rounded-xl object-cover shadow-md"
+							className="mt-6 h-72 w-3/5 rounded-button object-cover shadow-md"
 						/>
 
 						{/* Displays the selected filename. */}
-						<p className="mt-4 rounded-lg bg-slate-100 px-4 py-2 text-sm text-slate-700">
+						<p className="mt-4 rounded-lg bg-turners-background px-4 py-2 text-sm text-slate-700">
 							📷 {selectedFile.name}
 						</p>
 
@@ -134,10 +134,10 @@ function ImageUpload({
 								htmlFor={
 									isLoading ? undefined : "vehicle-image"
 								}
-								className={`rounded-xl px-8 py-3 font-medium text-white transition ${
+								className={`rounded-button px-8 py-3 text-[15px] font-normal text-white transition ${
 									isLoading
-										? "cursor-not-allowed bg-red-300"
-										: "cursor-pointer bg-red-600 hover:bg-red-700"
+										? "cursor-not-allowed bg-slate-400"
+										: "cursor-pointer bg-turners-secondary hover:bg-turners-secondary-hover"
 								}`}
 							>
 								Change Image
@@ -146,10 +146,10 @@ function ImageUpload({
 							<button
 								onClick={handleAnalyseVehicle}
 								disabled={isLoading}
-								className={`rounded-xl px-8 py-3 font-medium text-white transition ${
+								className={`rounded-button px-8 py-3 text-[15px] font-normal text-white transition ${
 									isLoading
 										? "cursor-not-allowed bg-slate-400"
-										: "bg-slate-800 hover:bg-slate-900"
+										: "bg-turners-primary hover:bg-turners-primary-hover"
 								}`}
 							>
 								{isLoading ? (

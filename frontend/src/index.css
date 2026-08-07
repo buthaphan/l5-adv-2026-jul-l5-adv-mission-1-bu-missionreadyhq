@@ -1,4 +1,32 @@
-/* Developer Note:
-   Imports all Tailwind CSS utilities into the application. */
-
+/*
+ * Imports all Tailwind CSS utilities into the application.
+ */
 @import "tailwindcss";
+
+/*
+ * Defines reusable design tokens based on the Turners branding.
+ */
+@theme {
+  /* ==========================
+     Brand Colours
+     ========================== */
+
+  --color-turners-primary: #0073cf;
+  --color-turners-primary-hover: #004a86;
+
+  --color-turners-secondary: #b71234;
+  --color-turners-secondary-hover: #8f0d29;
+
+  /* ==========================
+     Background Colours
+     ========================== */
+
+  --color-turners-background: #f8fafc;
+  --color-turners-surface: #ffffff;
+
+  /* ==========================
+     Border Radius
+     ========================== */
+
+  --radius-button: 6px;
+}
