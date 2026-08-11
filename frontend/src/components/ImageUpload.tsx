@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 
 import { analyseVehicle } from "../services/vehicleService";
@@ -158,7 +157,7 @@ function ImageUpload({
 			<div className="flex flex-col items-center justify-center">
 				{/* Displays an error message if the analysis fails. */}
 				{error && (
-					<div className="mt-6 w-full rounded-button border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
+					<div className="m-2 w-full rounded-button border border-red-200 bg-red-50 px-6 py-3 text-center text-red-700">
 						{error}
 					</div>
 				)}
@@ -206,12 +205,19 @@ function ImageUpload({
 					<>
 						{/* Preview screen */}
 						<div className="flex w-full flex-col gap-6 lg:flex-row lg:items-stretch">
-							<div className="flex w-full lg:w-1/2">
+							<div className="relative flex w-full lg:w-3/5">
 								<img
 									src={previewUrl || ""}
 									alt="Vehicle preview"
-									className="h-full w-full rounded-2xl border border-slate-200 object-cover shadow-lg"
+									className={`h-full w-full rounded-2xl border border-slate-200 object-cover shadow-lg transition-opacity duration-300 ${
+										isLoading ? "opacity-50" : "opacity-100"
+									}`}
 								/>
+								{isLoading && (
+									<div className="absolute inset-0 overflow-hidden rounded-2xl">
+										<div className="scan-line" />
+									</div>
+								)}
 							</div>
 
 							<div className="flex w-full flex-col justify-center gap-2 lg:w-1/2">
@@ -254,14 +260,9 @@ function ImageUpload({
 												: "bg-turners-primary hover:bg-turners-primary-hover"
 										}`}
 									>
-										{isLoading ? (
-											<span className="flex items-center justify-center gap-2">
-												<AiOutlineLoading3Quarters className="animate-spin" />
-												Analysing...
-											</span>
-										) : (
-											"Analyse Vehicle"
-										)}
+										{isLoading
+											? "Analysing..."
+											: "Analyse Vehicle"}
 									</button>
 								</div>
 							</div>
