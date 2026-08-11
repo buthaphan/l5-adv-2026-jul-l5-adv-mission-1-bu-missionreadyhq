@@ -33,7 +33,7 @@ function PredictionCard({ prediction }: PredictionCardProps) {
 	}
 
 	return (
-		<section className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+		<section className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
 			<h2 className="text-2xl font-semibold text-slate-800">
 				Vehicle Prediction
 			</h2>
@@ -69,12 +69,12 @@ function PredictionCard({ prediction }: PredictionCardProps) {
 				/>
 			</div>
 			{prediction.reason && (
-				<div className="mt-8 rounded-xl border-l-4 border-turners-primary bg-slate-50 p-5">
+				<div className=" rounded-xl border-l-4 border-turners-primary bg-slate-50 p-5">
 					<h3 className="mb-3 text-base font-semibold text-slate-800">
 						AI Reasoning
 					</h3>
 
-					<p className="leading-7 text-slate-700">
+					<p className="text-sm leading-6 text-slate-600">
 						{prediction.reason}
 					</p>
 				</div>
