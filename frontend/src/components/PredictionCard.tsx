@@ -1,3 +1,5 @@
+// Displays the AI vehicle prediction returned by the backend.
+
 import type { ReactNode } from "react";
 import type { VehiclePrediction } from "../types/vehiclePrediction";
 
@@ -16,7 +18,9 @@ function DetailRow({ label, value }: DetailRowProps) {
 		<div className="flex items-center justify-between border-b border-slate-100 py-3 last:border-b-0">
 			<span className="text-sm font-medium text-slate-700">{label}</span>
 
-			<span className="font-semibold text-slate-800">{value}</span>
+			<span className="font-semibold text-slate-800">
+				{value ?? "Not available"}
+			</span>
 		</div>
 	);
 }
@@ -56,7 +60,7 @@ function PredictionCard({ prediction }: PredictionCardProps) {
 			{prediction.reason && (
 				<div className="mt-8 rounded-xl border-l-4 border-turners-primary bg-slate-50 p-5">
 					<h3 className="mb-3 text-base font-semibold text-slate-800">
-						💡 AI Reasoning
+						AI Reasoning
 					</h3>
 
 					<p className="leading-7 text-slate-700">

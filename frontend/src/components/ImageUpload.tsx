@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import axios from "axios";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 import { analyseVehicle } from "../services/vehicleService";
 import type { VehiclePrediction } from "../types/vehiclePrediction";
-
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 type ImageUploadProps = {
 	onPredictionReceived: (prediction: VehiclePrediction) => void;
@@ -24,8 +25,25 @@ function ImageUpload({
 	// Stores an error message if the analysis fails.
 	const [error, setError] = useState<string | null>(null);
 
-	// Creates a temporary URL so the selected image can be displayed.
-	const previewUrl = selectedFile ? URL.createObjectURL(selectedFile) : null;
+	// Stores the temporary URL used to preview the selected image.
+	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+	// Create a temporary object URL for the selected image and
+	// release it when the image changes or the component unmounts.
+	useEffect(() => {
+		if (!selectedFile) {
+			setPreviewUrl(null);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(selectedFile);
+
+		setPreviewUrl(objectUrl);
+
+		return () => {
+			URL.revokeObjectURL(objectUrl);
+		};
+	}, [selectedFile]);
 
 	// Updates the selected image when the user chooses a file.
 	function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -56,7 +74,7 @@ function ImageUpload({
 
 			onPredictionReceived(result);
 		} catch (error) {
-			console.error(error);
+			console.error("Vehicle analysis failed:", error);
 
 			if (axios.isAxiosError(error)) {
 				if (!error.response) {
@@ -118,7 +136,7 @@ function ImageUpload({
 					<>
 						{/* Displays the selected image preview. */}
 						<img
-							src={previewUrl!}
+							src={previewUrl || ""}
 							alt="Vehicle preview"
 							className="mt-6 h-72 w-3/5 rounded-button object-cover shadow-md"
 						/>
