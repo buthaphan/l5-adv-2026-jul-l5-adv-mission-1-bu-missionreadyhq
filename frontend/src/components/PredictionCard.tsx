@@ -33,7 +33,7 @@ function PredictionCard({ prediction }: PredictionCardProps) {
 	}
 
 	return (
-		<section className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+		<section className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
 			<h2 className="text-2xl font-semibold text-slate-800">
 				Vehicle Prediction
 			</h2>
@@ -51,19 +51,30 @@ function PredictionCard({ prediction }: PredictionCardProps) {
 				<DetailRow
 					label="Confidence"
 					value={
-						<span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
-							{(prediction.confidence * 100).toFixed(1)}%
-						</span>
+						<div className="flex items-center gap-3">
+							<div className="h-3 w-32 overflow-hidden rounded-full bg-slate-200">
+								<div
+									className="h-full rounded-full bg-turners-primary transition-all duration-500"
+									style={{
+										width: `${prediction.confidence * 100}%`,
+									}}
+								/>
+							</div>
+
+							<span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-turners-primary">
+								{(prediction.confidence * 100).toFixed(1)}%
+							</span>
+						</div>
 					}
 				/>
 			</div>
 			{prediction.reason && (
-				<div className="mt-8 rounded-xl border-l-4 border-turners-primary bg-slate-50 p-5">
+				<div className=" rounded-xl border-l-4 border-turners-primary bg-slate-50 p-5">
 					<h3 className="mb-3 text-base font-semibold text-slate-800">
 						AI Reasoning
 					</h3>
 
-					<p className="leading-7 text-slate-700">
+					<p className="text-sm leading-6 text-slate-600">
 						{prediction.reason}
 					</p>
 				</div>
