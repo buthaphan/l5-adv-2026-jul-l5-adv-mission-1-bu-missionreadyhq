@@ -102,22 +102,6 @@ function ImageUpload({
 	return (
 		<section className="group relative overflow-hidden rounded-3xl border-2 border-dashed border-slate-200 bg-white px-6 py-4 md:px-6 md:py-4 shadow-lg transition-all duration-300 hover:border-turners-primary hover:shadow-lg">
 			<div className="flex flex-col items-center justify-center">
-				{!selectedFile && (
-					<div className="flex flex-col items-center">
-						<div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-50">
-							<PhotoIcon className="h-10 w-10 text-turners-primary" />
-						</div>
-
-						<h3 className="mt-6 text-2xl font-bold text-slate-800">
-							Upload your vehicle image
-						</h3>
-
-						<p className="mt-3 max-w-md text-center text-slate-500">
-							Drag and drop your vehicle image here or browse from
-							your computer.
-						</p>
-					</div>
-				)}
 				{/* Displays an error message if the analysis fails. */}
 				{error && (
 					<div className="mt-6 w-full rounded-button border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
@@ -136,68 +120,97 @@ function ImageUpload({
 
 				{!selectedFile ? (
 					<>
-						{/* Displays the upload button before an image is selected. */}
-						<button
-							type="button"
-							onClick={() => fileInputRef.current?.click()}
-							className="mt-8 rounded-button bg-turners-primary px-8 py-3 text-[15px] font-normal text-white transition hover:bg-turners-primary-hover"
-						>
-							Browse Images
-						</button>
-						<p className="mt-4 text-sm text-slate-400">
-							Supports JPG, PNG and JPEG
-						</p>
-					</>
-				) : (
-					<>
-						<h2 className="text-2xl font-semibold text-slate-800">
-							Vehicle Preview
-						</h2>
-						{/* Displays the selected image preview. */}
-						<img
-							src={previewUrl || ""}
-							alt="Vehicle preview"
-							className="mt-6 h-72 w-3/5 rounded-button object-cover shadow-md"
-						/>
+						{/* Upload screen */}
+						<div className="flex flex-col items-center">
+							<div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-50">
+								<PhotoIcon className="h-10 w-10 text-turners-primary" />
+							</div>
 
-						{/* Displays the selected filename. */}
-						<p className="mt-4 rounded-lg bg-turners-background px-4 py-2 text-sm text-slate-700">
-							📷 {selectedFile.name}
-						</p>
+							<h2 className="mt-6 text-3xl font-bold text-slate-800">
+								Upload your vehicle image
+							</h2>
 
-						{/* Displays the available actions after an image has been selected. */}
-						<div className="mt-6 flex gap-4">
+							<p className="mt-3 max-w-md text-center text-slate-500">
+								Drag and drop your vehicle image here or browse
+								from your computer.
+							</p>
+
 							<button
 								type="button"
 								onClick={() => fileInputRef.current?.click()}
-								disabled={isLoading}
-								className={`rounded-button px-8 py-3 text-[15px] font-normal text-white transition ${
-									isLoading
-										? "cursor-not-allowed bg-slate-400"
-										: "bg-turners-secondary hover:bg-turners-secondary-hover"
-								}`}
+								className="mt-8 rounded-button bg-turners-primary px-8 py-3 text-[15px] font-medium text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-turners-primary-hover hover:shadow-lg"
 							>
-								Change Image
+								Browse Image
 							</button>
 
-							<button
-								onClick={handleAnalyseVehicle}
-								disabled={isLoading}
-								className={`rounded-button px-8 py-3 text-[15px] font-normal text-white transition ${
-									isLoading
-										? "cursor-not-allowed bg-slate-400"
-										: "bg-turners-primary hover:bg-turners-primary-hover"
-								}`}
-							>
-								{isLoading ? (
-									<span className="flex items-center gap-2">
-										<AiOutlineLoading3Quarters className="animate-spin" />
-										Analysing...
-									</span>
-								) : (
-									"Analyse Vehicle"
-								)}
-							</button>
+							<p className="mt-4 text-sm text-slate-400">
+								JPG • PNG • JPEG
+							</p>
+						</div>
+					</>
+				) : (
+					<>
+						{/* Preview screen */}
+						<div className="flex w-full flex-col gap-6 lg:flex-row lg:items-stretch">
+							<div className="flex w-full lg:w-1/2">
+								<img
+									src={previewUrl || ""}
+									alt="Vehicle preview"
+								className="h-full w-full rounded-2xl border border-slate-200 object-cover shadow-lg"
+								/>
+							</div>
+
+							<div className="flex w-full flex-col justify-center gap-2 lg:w-1/2">
+								<h2 className="text-2xl font-bold text-slate-800">
+									Selected Vehicle
+								</h2>
+
+								<p className="mt-2 text-slate-500">
+									Review your image before starting AI
+									analysis.
+								</p>
+
+								<p className="mt-6 rounded-full bg-slate-100 px-4 py-2 text-sm text-slate-700">
+									📄 {selectedFile.name}
+								</p>
+
+								<div className="mt-8 flex flex-col gap-3 sm:flex-row">
+									<button
+										type="button"
+										onClick={() =>
+											fileInputRef.current?.click()
+										}
+										disabled={isLoading}
+										className={`flex-1 rounded-button px-8 py-3 text-white transition ${
+											isLoading
+												? "cursor-not-allowed bg-slate-400"
+												: "bg-turners-secondary hover:bg-turners-secondary-hover"
+										}`}
+									>
+										Change Image
+									</button>
+
+									<button
+										type="button"
+										onClick={handleAnalyseVehicle}
+										disabled={isLoading}
+										className={`flex-1 rounded-button px-8 py-3 text-white transition ${
+											isLoading
+												? "cursor-not-allowed bg-slate-400"
+												: "bg-turners-primary hover:bg-turners-primary-hover"
+										}`}
+									>
+										{isLoading ? (
+											<span className="flex items-center justify-center gap-2">
+												<AiOutlineLoading3Quarters className="animate-spin" />
+												Analysing...
+											</span>
+										) : (
+											"Analyse Vehicle"
+										)}
+									</button>
+								</div>
+							</div>
 						</div>
 					</>
 				)}
