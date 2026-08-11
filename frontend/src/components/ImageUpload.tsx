@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 
 import { analyseVehicle } from "../services/vehicleService";
 import type { VehiclePrediction } from "../types/vehiclePrediction";
@@ -99,16 +100,24 @@ function ImageUpload({
 	}
 
 	return (
-		<section className="rounded-2xl border-2 border-dashed border-slate-300 bg-turners-surface p-10 shadow-lg">
+		<section className="group relative overflow-hidden rounded-3xl border-2 border-dashed border-slate-200 bg-white px-6 py-4 md:px-6 md:py-4 shadow-lg transition-all duration-300 hover:border-turners-primary hover:shadow-lg">
 			<div className="flex flex-col items-center justify-center">
-				<h2 className="text-2xl font-semibold text-slate-800">
-					Upload Vehicle Image
-				</h2>
+				{!selectedFile && (
+					<div className="flex flex-col items-center">
+						<div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-50">
+							<PhotoIcon className="h-10 w-10 text-turners-primary" />
+						</div>
 
-				<p className="mt-3 text-center text-slate-500">
-					Choose a clear image of a vehicle for AI analysis.
-				</p>
+						<h3 className="mt-6 text-2xl font-bold text-slate-800">
+							Upload your vehicle image
+						</h3>
 
+						<p className="mt-3 max-w-md text-center text-slate-500">
+							Drag and drop your vehicle image here or browse from
+							your computer.
+						</p>
+					</div>
+				)}
 				{/* Displays an error message if the analysis fails. */}
 				{error && (
 					<div className="mt-6 w-full rounded-button border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
@@ -133,11 +142,17 @@ function ImageUpload({
 							onClick={() => fileInputRef.current?.click()}
 							className="mt-8 rounded-button bg-turners-primary px-8 py-3 text-[15px] font-normal text-white transition hover:bg-turners-primary-hover"
 						>
-							Browse Image
+							Browse Images
 						</button>
+						<p className="mt-4 text-sm text-slate-400">
+							Supports JPG, PNG and JPEG
+						</p>
 					</>
 				) : (
 					<>
+						<h2 className="text-2xl font-semibold text-slate-800">
+							Vehicle Preview
+						</h2>
 						{/* Displays the selected image preview. */}
 						<img
 							src={previewUrl || ""}
