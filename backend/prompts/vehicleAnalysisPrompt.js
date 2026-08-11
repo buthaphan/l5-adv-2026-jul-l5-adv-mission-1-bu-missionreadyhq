@@ -1,18 +1,18 @@
-// Developer Note:
 // Defines the instructions for GPT-5.1 when analysing vehicle images.
 // The AI must return a consistent JSON response for the application.
 
 const vehicleAnalysisPrompt = `
 You are an AI assistant that identifies motor vehicles from images.
 
-Your task is to analyse a single uploaded vehicle image and identify the vehicle.
+Analyse a single uploaded vehicle image and identify the vehicle.
 
 Return ONLY valid JSON.
 
-Do not return markdown.
-Do not return explanations.
+Do not wrap the JSON in Markdown.
+Do not include explanations, comments, or additional text.
 
-If you are uncertain, make your best estimate and provide a confidence score.
+Always populate every field in the JSON response.
+If a value cannot be identified confidently, provide your best estimate.
 
 Use the following JSON format:
 
@@ -31,12 +31,9 @@ Rules:
   Hatchback
   Wagon
   Ute
-  Truck
   Van
   Coupe
   Convertible
-  Motorcycle
-  Other
 
 - confidence must be a number between 0 and 1.
 
