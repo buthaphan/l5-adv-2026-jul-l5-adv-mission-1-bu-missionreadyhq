@@ -29,6 +29,9 @@ function ImageUpload({
 	// Stores the temporary URL used to preview the selected image.
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
+	// Tracks whether a file is currently being dragged over the upload area.
+	const [isDragging, setIsDragging] = useState(false);
+
 	// References the hidden file input so it can be opened from a button.
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -49,10 +52,8 @@ function ImageUpload({
 		};
 	}, [selectedFile]);
 
-	// Updates the selected image when the user chooses a file.
-	function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-		const file = event.target.files?.[0] ?? null;
-
+	// Updates the selected image and resets the previous prediction.
+	function handleSelectedFile(file: File | null) {
 		// Clears the previous prediction before selecting a new image.
 		onResetPrediction();
 
@@ -60,6 +61,33 @@ function ImageUpload({
 		setError(null);
 
 		setSelectedFile(file);
+	}
+
+	// Handles selecting a file from the file picker.
+	function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+		handleSelectedFile(event.target.files?.[0] ?? null);
+	}
+
+	function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
+		event.preventDefault();
+
+		setIsDragging(true);
+	}
+
+	// Removes the highlight when the dragged file leaves the upload area.
+	function handleDragLeave() {
+		setIsDragging(false);
+	}
+
+	// Handles dropping a file onto the upload area.
+	function handleDrop(event: React.DragEvent<HTMLDivElement>) {
+		event.preventDefault();
+
+		setIsDragging(false);
+
+		const file = event.dataTransfer.files?.[0] ?? null;
+
+		handleSelectedFile(file);
 	}
 
 	// Sends the selected image to the backend for AI analysis.
@@ -100,7 +128,33 @@ function ImageUpload({
 	}
 
 	return (
-		<section className="group relative overflow-hidden rounded-3xl border-2 border-dashed border-slate-200 bg-white px-6 py-4 md:px-6 md:py-4 shadow-lg transition-all duration-300 hover:border-turners-primary hover:shadow-lg">
+		<section
+			onDragOver={handleDragOver}
+			onDragLeave={handleDragLeave}
+			onDrop={handleDrop}
+			className={`
+			group
+			relative
+			overflow-hidden
+			rounded-3xl
+			border-2
+			border-dashed
+			bg-white
+			px-8
+			py-6
+			md:px-10
+			md:py-8
+			shadow-md
+			transition-all
+			duration-300
+			hover:shadow-lg
+		${
+			isDragging
+				? "border-turners-primary bg-red-50 scale-[1.01]"
+				: "border-slate-200 hover:border-turners-primary"
+		}
+	`}
+		>
 			<div className="flex flex-col items-center justify-center">
 				{/* Displays an error message if the analysis fails. */}
 				{error && (
@@ -156,7 +210,7 @@ function ImageUpload({
 								<img
 									src={previewUrl || ""}
 									alt="Vehicle preview"
-								className="h-full w-full rounded-2xl border border-slate-200 object-cover shadow-lg"
+									className="h-full w-full rounded-2xl border border-slate-200 object-cover shadow-lg"
 								/>
 							</div>
 
