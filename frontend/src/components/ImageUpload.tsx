@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -27,6 +27,9 @@ function ImageUpload({
 
 	// Stores the temporary URL used to preview the selected image.
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+	// References the hidden file input so it can be opened from a button.
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	// Create a temporary object URL for the selected image and
 	// release it when the image changes or the component unmounts.
@@ -113,8 +116,8 @@ function ImageUpload({
 					</div>
 				)}
 
-				{/* Hidden file input triggered by the custom upload button. */}
 				<input
+					ref={fileInputRef}
 					id="vehicle-image"
 					className="hidden"
 					type="file"
@@ -125,12 +128,13 @@ function ImageUpload({
 				{!selectedFile ? (
 					<>
 						{/* Displays the upload button before an image is selected. */}
-						<label
-							htmlFor="vehicle-image"
-							className="mt-8 cursor-pointer rounded-button bg-turners-primary px-8 py-3 text-[15px] font-normal text-white transition hover:bg-turners-primary-hover"
+						<button
+							type="button"
+							onClick={() => fileInputRef.current?.click()}
+							className="mt-8 rounded-button bg-turners-primary px-8 py-3 text-[15px] font-normal text-white transition hover:bg-turners-primary-hover"
 						>
 							Browse Image
-						</label>
+						</button>
 					</>
 				) : (
 					<>
@@ -148,18 +152,18 @@ function ImageUpload({
 
 						{/* Displays the available actions after an image has been selected. */}
 						<div className="mt-6 flex gap-4">
-							<label
-								htmlFor={
-									isLoading ? undefined : "vehicle-image"
-								}
+							<button
+								type="button"
+								onClick={() => fileInputRef.current?.click()}
+								disabled={isLoading}
 								className={`rounded-button px-8 py-3 text-[15px] font-normal text-white transition ${
 									isLoading
 										? "cursor-not-allowed bg-slate-400"
-										: "cursor-pointer bg-turners-secondary hover:bg-turners-secondary-hover"
+										: "bg-turners-secondary hover:bg-turners-secondary-hover"
 								}`}
 							>
 								Change Image
-							</label>
+							</button>
 
 							<button
 								onClick={handleAnalyseVehicle}
