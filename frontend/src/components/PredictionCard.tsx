@@ -51,9 +51,20 @@ function PredictionCard({ prediction }: PredictionCardProps) {
 				<DetailRow
 					label="Confidence"
 					value={
-						<span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
-							{(prediction.confidence * 100).toFixed(1)}%
-						</span>
+						<div className="flex items-center gap-3">
+							<div className="h-3 w-32 overflow-hidden rounded-full bg-slate-200">
+								<div
+									className="h-full rounded-full bg-turners-primary transition-all duration-500"
+									style={{
+										width: `${prediction.confidence * 100}%`,
+									}}
+								/>
+							</div>
+
+							<span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-turners-primary">
+								{(prediction.confidence * 100).toFixed(1)}%
+							</span>
+						</div>
 					}
 				/>
 			</div>
