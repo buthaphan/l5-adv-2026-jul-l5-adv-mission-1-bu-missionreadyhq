@@ -52,16 +52,26 @@ function ImageUpload({
 	}, [selectedFile]);
 
 	// Updates the selected image and resets the previous prediction.
-	function handleSelectedFile(file: File | null) {
-		// Clears the previous prediction before selecting a new image.
-		onResetPrediction();
-
-		// Clears any previous error.
-		setError(null);
-
-		setSelectedFile(file);
+function handleSelectedFile(file: File | null) {
+	// User cancelled the file picker.
+	if (!file) {
+		return;
 	}
 
+	// Only allow image files.
+	if (!file.type.startsWith("image/")) {
+		setError("Please upload a valid image file (JPG, JPEG or PNG).");
+		return;
+	}
+
+	// Clears the previous prediction before selecting a new image.
+	onResetPrediction();
+
+	// Clears any previous error.
+	setError(null);
+
+	setSelectedFile(file);
+}
 	// Handles selecting a file from the file picker.
 	function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
 		handleSelectedFile(event.target.files?.[0] ?? null);
