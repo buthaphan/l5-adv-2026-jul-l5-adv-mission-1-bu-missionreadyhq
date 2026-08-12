@@ -1,9 +1,5 @@
 # Testing Checklist
 
-❌
-
-✅
-
 ## Overview
 
 This document records the manual testing performed for the AI Vehicle Inspector application.
