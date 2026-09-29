@@ -54,7 +54,7 @@ This document records the manual testing performed for the AI Vehicle Inspector 
 | Test | Status | Notes |
 |------|:------:|------|
 | Backend unavailable | ✅ | |
-| Invalid image selected | ❌ | Non-image files can be selected and are treated as images. No validation message is displayed. |
+| Invalid image selected | ✅ | Non-image files are rejected with a validation message. |
 | Large image upload | N/A | Last test image not available during manual testing |
 | Error message displayed | ✅ | |
 | User can analyse again after an error | ✅ | |
