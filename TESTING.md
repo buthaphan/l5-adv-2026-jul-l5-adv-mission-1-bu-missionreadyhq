@@ -87,7 +87,6 @@ This document records the manual testing performed for the AI Vehicle Inspector 
 
 # Issues Found
 
-# Issues Found
 
 | ID | Test | Description | Status | Commit |
 |----|------|-------------|:------:|--------|
